@@ -1,0 +1,623 @@
+<!doctype html>
+<html class="h-100" lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <meta name="description" content="A growing collection of ready to use components for the CSS framework Bootstrap 5">
+    <link rel="icon" type="image/png" sizes="100x100" href="img/seacucumber.png" type="image/x-icon">
+    <meta name="author" content="2023.ITB">
+    <meta name="generator" content="Eleventy v2.0.0">
+    <meta name="HandheldFriendly" content="true">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.sound.min.js"></script>
+    
+    <script src="https://unpkg.com/ml5@0.5.0/dist/ml5.min.js"></script>
+    <title>The Marine Echo</title>
+    <link rel="stylesheet" href="css/theme.min.css">
+
+    <script src="sketch.js"></script>
+</head>
+
+   <style>
+
+.card-container {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+#sketch-container {
+  width: 100%; /* Set the width to 100% for responsiveness */
+  height: 0; /* Set initial height to 0 */
+  padding-bottom: 75%; /* Set padding-bottom based on the aspect ratio (e.g., 16:9) */
+  position: relative;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+/* inter-300 - latin */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: local(''),
+       url('./fonts/inter-v12-latin-300.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('./fonts/inter-v12-latin-300.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: local(''),
+       url('./fonts/inter-v12-latin-500.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('./fonts/inter-v12-latin-500.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local(''),
+       url('./fonts/inter-v12-latin-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('./fonts/inter-v12-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+</style>
+
+<style>
+  .canvas {
+  display: block;
+}
+
+  .toggle-container {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .toggle-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Place the text in front of the image */
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .toggle-container:hover .toggle-content {
+    opacity: 1;
+  }
+  .toggle-image {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+}
+
+.toggle-image1 {
+    background-image: url('img/announcement.jpg');
+}
+
+.toggle-image2 {
+    background-image: url('img/docs.jpg');
+}
+
+.toggle-image3 {
+    background-image: url('img/statement.jpg');
+}
+
+.toggle-image4 {
+    background-image: url('img/founding.jpg');
+}
+
+.toggle-image5 {
+    background-image: url('img/LEA.jpg');
+}
+
+</style>
+
+  </head>
+
+  <body data-bs-spy="scroll" data-bs-target="#navScroll">
+
+    <nav id="navScroll" class="navbar navbar-expand-lg navbar-light fixed-top" tabindex="0">
+  <div class="container">
+    <a class="navbar-brand pe-2 fs-2" href="/">
+      <img src="img/logo.png" alt="logo" width="150" height="80">
+      <span class="ms-1 fw-bolder">𝕋𝕄𝔼</span>
+    </a>
+    
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+    <a class="nav-link" href="#seacucumber" aria-label="Brings you to the frontpage">
+      Headlines
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#aboutus">
+      About us
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#testimonials">
+      Testimonials
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#gallery">
+      Gallery
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#workwithus">
+    
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#testimonials">
+      Our Team
+    </a>
+  </li>
+
+    </ul>
+
+    </div>
+</div>
+</nav>
+
+<main>
+  <div class="w-100 overflow-hidden bg-gray-100" id="top">
+
+<div class="container position-relative">
+<div class="col-12 col-lg-8 mt-0 h-100 position-absolute top-0 end-0 bg-cover" data-aos="fade-left" style="background-image: url(img/tmebg.png);">
+
+</div>
+<div class="row">
+
+<div class="col-lg-7 py-vh-6 position-relative" data-aos="fade-right">
+<h6 class="display-1 fw-bold mt-5">𝐓𝐡𝐞 𝐌𝐚𝐫𝐢𝐧𝐞 𝐄𝐜𝐡𝐨</h6>
+<p class="lead">𝙏𝙝𝙚 𝙊𝙛𝙛𝙞𝙘𝙞𝙖𝙡 𝙋𝙪𝙗𝙡𝙞𝙘𝙖𝙩𝙞𝙤𝙣 𝙤𝙛 𝙈𝙞𝙣𝙙𝙖𝙣𝙖𝙤 𝙎𝙩𝙖𝙩𝙚 <br> 𝙐𝙣𝙞𝙫𝙚𝙧𝙨𝙞𝙩𝙮 𝙖𝙩 𝙉𝙖𝙖𝙬𝙖𝙣<p>
+<a href="#" class="btn btn-dark btn-xl shadow me-3 rounded-0 my-5">𝔸𝕞𝕡𝕝𝕚𝕗𝕪𝕚𝕟𝕘 𝕋𝕣𝕦𝕥𝕙𝕗𝕦𝕝 𝕍𝕠𝕚𝕔𝕖𝕤!</a>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<div class="py-vh-5 w-100 overflow-hidden" id="seacucumber">
+  <div class="container">
+   
+  <div class="row d-flex justify-content-end">
+<div class="col-lg-8" data-aos="fade-down"><h2 class="display-6">Get to know the latest news and updates!</h2></div>
+</div>
+<div class="row d-flex align-items-center">
+<!--Intig-->
+<div class="col-md-6 col-lg-4 py-vh-6 pb-0 toggle-container" data-aos="fade-up" data-aos-delay="600">
+  <div class="toggle-content">
+  <span class="h5 fw-lighter">01.</span>
+  <h3 class="py-5 border-top border-dark">ANNOUNCEMENT</h3>
+  <p>MEMORANDUM NO.061 - MSU SERIES 0F 2023</p>
+  <p>Immediate to online/modular distance learning modalities to all academic levels of MSU at Naawan.</p>
+</div>
+<div class="toggle-image toggle-image1"></div>
+</div>
+
+<div class="col-md-6 col-lg-4 py-vh-6 pb-0 toggle-container" data-aos="fade-up" data-aos-delay="600">
+  <div class="toggle-content">
+  <span class="h5 fw-lighter">02.</span>
+  <h3 class="py-5 border-top border-dark">ANNOUNCEMENT</h3>
+  <p>OFFICE OF THE CHANCELLOR</p>
+  <p>statements...</p>
+</div>
+<div class="toggle-image toggle-image2"></div>
+</div>
+
+
+<div class="col-md-6 col-lg-4 py-vh-6 pb-0 toggle-container" data-aos="fade-up" data-aos-delay="600">
+  <div class="toggle-content">
+    <span class="h5 fw-lighter">03.</span>
+    <h3 class="py-5 border-top border-light">ANNOUNCEMENT</h3>
+    <p>Official Statement of the MSU at Naawan</p>
+  </div>
+  <div class="toggle-image toggle-image3"></div>
+</div>
+
+
+
+<div class="col-md-6 col-lg-4 py-vh-6 pb-0 toggle-container" data-aos="fade-up" data-aos-delay="600">
+  <div class="toggle-content">
+  <span class="h5 fw-lighter">04.</span>
+  <h3 class="py-5 border-top border-dark">EVENTS</h3>
+  <p>50Th Founding Anniversary of the MSU at Naawan</p>
+</div>
+<div class="toggle-image toggle-image4"></div>
+</div>
+
+<div class="col-md-6 col-lg-4 py-vh-6 pb-0 toggle-container" data-aos="fade-up" data-aos-delay="600">
+  <div class="toggle-content">
+  <span class="h5 fw-lighter">05.</span>
+  <h3 class="py-5 border-top border-dark">GREETINGS</h3>
+  <p>Congratulations to our newly licensed for Agriculturists</p>
+</div>
+<div class="toggle-image toggle-image5"></div>
+</div>
+</div>
+
+
+  </div>
+
+</div>
+
+  </div>
+</div>
+
+<div class="py-vh-4 bg-gray-100 w-100 overflow-hidden" id="aboutus">
+  <div class="container">
+      
+<div class="row d-flex justify-content-between align-items-center">
+  <div class="col-lg-6">
+  <div class="row gx-5 d-flex">
+    <div class="col-md-11">
+      <div class="shadow ratio ratio-16x9 rounded bg-cover bp-center align-self-end" data-aos="fade-right" style="background-image: url(img/team.png);--bs-aspect-ratio: 50%;">
+      </div>
+    </div>
+    <div class="col-md-5 offset-md-1">
+      <div class="shadow ratio ratio-1x1 rounded bg-cover mt-5 bp-center float-end" data-aos="fade-up" style="background-image: url(img/team1.png);">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="col-12 shadow ratio rounded bg-cover mt-5 bp-center" data-aos="fade-left" style="background-image: url(img/team3.jpg);--bs-aspect-ratio: 50%;">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-lg-4">
+  <h3 class="py-5 border-top border-dark" data-aos="fade-left" >Our Journey through Mindanao State University at Naawan</h3>
+  <p data-aos="fade-left" data-aos-delay="200">The Marine Echo is the official publication of the Mindanao State University at Naawan. It is a student publication that aims to inform, educate, and entertain the studentry and the community. It is a member of the National Union of Students of the Philippines (NUSP) and the College Editors Guild of the Philippines (CEGP).</p>
+  </p>
+  <p>
+    <a href="https://web.facebook.com/MarineEchoMSUN" target="_blank" class="link-fancy link-fancy-light" data-aos="fade-left" data-aos-delay="400"> <b>Visit our Official Facebook Page!</b></a>
+    </a>
+  </p>
+</div>
+</div>
+
+  </div>
+</div>
+
+
+
+<div class="position-relative overflow-hidden w-100 bg-light" id="gallery">
+  <div class="container-fluid">
+  <div class="row overflow-scroll">
+    <div class="col-12">
+      <div class="row vw-100 px-0 py-vh-5 d-flex align-items-center scrollx">
+        <div class="col-md-2" data-aos="fade-up">
+            <img src="img/1.jpg" class="rounded shadow img-fluid" alt="nice gallery image" width="844" height="1054">
+        </div>
+
+        <div class="col-md-2" data-aos="fade-up" data-aos-delay="200">
+            <img src="img/7.jpg" class="img-fluid rounded shadow" alt="nice gallery image" width="844" height="1054">
+        </div>
+
+        <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
+            <img src="img/2.jpg" class="img-fluid rounded shadow" alt="nice gallery image" width="844" height="1054">
+        </div>
+
+        <div class="col-md-3" data-aos="fade-up" data-aos-delay="600">
+            <img src="img/5.jpg" class="img-fluid rounded shadow" alt="nice gallery image" width="844" height="1054">
+        </div>
+
+        <div class="col-md-2" data-aos="fade-up" data-aos-delay="800">
+            <img src="img/10.jpg" class="rounded shadow img-fluid" alt="nice gallery image" width="844" height="1054">
+        </div>
+      </div>
+    </div>
+   </div>
+ </div>
+
+</div>
+
+
+
+<div class="bg-light w-100 overflow-hidden" id="testimonials">
+  <div class="container py-vh-6">
+    <div class="row d-flex justify-content-center">
+      <div class="col-12 col-lg-10 col-xl-8 text-center">
+  <h2 class="display-6">𝐓𝐡𝐞 𝐌𝐚𝐫𝐢𝐧𝐞 𝐄𝐜𝐡𝐨</h2>
+  <h1 class="lead">𝘈𝘤𝘢𝘥𝘦𝘮𝘪𝘤 𝘠𝘦𝘢𝘳 2023 - 2024</h1>
+  <p class="lead">𝐇𝐞𝐚𝐝𝐬 | 𝐀𝐝𝐯𝐢𝐬𝐞𝐫𝐬 | 𝐒𝐭𝐚𝐟𝐟𝐬 | 𝐖𝐫𝐢𝐭𝐞𝐫𝐬 | 𝐂𝐫𝐞𝐚𝐭𝐢𝐯𝐞𝐬</p>
+</div>
+<div class="col-12 mt-4">
+  <div class="row row-cols-1 row-cols-md-2 g-5 d-flex align-items-center">
+
+    <div class="col-12 col-lg-6 col-xl-4" data-aos="fade-right">
+      <div class="card p-4 mt-3 border-0">
+        <div class="card-body">
+          <div class="text-dark py-2 fs-3">
+</svg>
+</div>
+          <blockquote class="blockquote">
+            <p><b>Bench Arano</b></p>
+          </blockquote>
+          <div class="d-flex justify-content-between border-top pt-3">
+            <div>
+              <span class="h6 fw-5">Developer</span><br>
+              <small class="text-muted">MSU Naawan</small>
+            </div>
+            <img src="img/bents.jpg" width="90" height="90" class="rounded-circle" alt="" data-aos="fade">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6 col-xl-4">
+      <div class="card p-4 shadow mt-3 border-0" data-aos="fade-down">
+        <div class="card-body">
+          <div class="text-dark py-2 fs-3">
+</div>
+          <blockquote class="blockquote">
+            <p><b>Beboy Eyana</b></p>
+          </blockquote>
+          <div class="d-flex justify-content-between border-top pt-3">
+            <p class="card-text">
+              <span class="h6 fw-5">Developer</span><br>
+              <small class="text-muted">MSU Naawan</small>
+            </p>
+            <img src="img/Beboy.jpg" width="90" height="90" class="rounded-circle" alt="" data-aos="fade">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6 col-xl-4">
+      <div class="card p-4 mt-3 border-0" data-aos="fade-left">
+        <div class="card-body">
+          <div class="text-dark py-2 fs-3">
+</div>
+          <blockquote class="blockquote">
+            <p><b>Danelle Presbitero</b></p>
+          </blockquote>
+          <div class="d-flex justify-content-between border-top pt-3">
+            <p class="card-text">
+              <span class="h6 fw-5">Developer</span><br>
+              <small class="text-muted">MSU Naawan</small>
+            </p>
+            <img src="img/Dan.jpg" width="90" height="90" class="rounded-circle" alt="" data-aos="fade">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6 col-xl-4">
+      <div class="card p-4 mt-3 border-0" data-aos="fade-right">
+        <div class="card-body">
+          <div class="text-dark py-2 fs-3">
+</div>
+          <blockquote class="blockquote">
+            <p><b>Justine Caumeran</b></p>
+          </blockquote>
+          <div class="d-flex justify-content-between border-top pt-3">
+            <p class="card-text">
+              <span class="h6 fw-5">Developer</span><br>
+              <small class="text-muted">MSU Naawan</small>
+            </p>
+            <img src="img/Von.jpg" width="90" height="90" class="rounded-circle" alt="" data-aos="fade">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6 col-xl-4">
+      <div class="card p-4 mt-3 border-0" data-aos="fade-up">
+        <div class="card-body">
+          <div class="text-dark py-2 fs-3">
+</div>
+          <blockquote class="blockquote">
+            <p><b>Mark Madale</b></p>
+          </blockquote>
+          <div class="d-flex justify-content-between border-top pt-3">
+            <p class="card-text">
+              <span class="h6 fw-5">Devloper</span><br>
+              <small class="text-muted">MSU Naawan</small>
+            </p>
+            <img src="img/Mark.png" width="90" height="90" class="rounded-circle" alt="" data-aos="fade">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-6 col-xl-4">
+      <div class="card p-4 shadow mt-3 border-0" data-aos="fade-left">
+        <div class="card-body">
+          <div class="text-dark py-2 fs-3">
+
+</div>
+          <blockquote class="blockquote">
+            <p><b>Jay Francis Intig</b></p>
+          </blockquote>
+          <div class="d-flex justify-content-between border-top pt-3">
+            <p class="card-text">
+              <span class="h6 fw-5">Developer</span><br>
+              <small class="text-muted">MSU Naawan</small>
+            </p>
+            <img src="img/Jays.png" width="90" height="90" class="rounded-circle" alt="" data-aos="fade">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6 col-xl-4" data-aos="fade-right">
+      <div class="card p-4 mt-3 border-0">
+        <div class="card-body">
+          <div class="text-dark py-2 fs-3">
+</svg>
+</div>
+          <blockquote class="blockquote">
+            <p><b>Dianne Velasco</b></p>
+          </blockquote>
+          <div class="d-flex justify-content-between border-top pt-3">
+            <div>
+              <span class="h6 fw-5">Developer</span><br>
+              <small class="text-muted">MSU Naawan</small>
+            </div>
+            <img src="img/Dianne.jpg" width="90" height="90" class="rounded-circle" alt="" data-aos="fade">
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="col-12 col-lg-6 col-xl-4">
+  <div class="card p-4 mt-3 border-0" data-aos="fade-up">
+    <div class="card-body">
+      <div class="text-dark py-2 fs-3">
+</div>
+      <blockquote class="blockquote">
+        <p><b>Reycel Dumaulao</b></p>
+      </blockquote>
+      <div class="d-flex justify-content-between border-top pt-3">
+        <p class="card-text">
+          <span class="h6 fw-5">Devloper</span><br>
+          <small class="text-muted">MSU Naawan</small>
+        </p>
+        <img src="img/Reycel.jpg" width="90" height="90" class="rounded-circle" alt="" data-aos="fade">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-12 col-lg-6 col-xl-4">
+  <div class="card p-4 mt-3 border-0" data-aos="fade-left">
+    <div class="card-body">
+      <div class="text-dark py-2 fs-3">
+</div>
+      <blockquote class="blockquote">
+        <p><b>Jay Ann Abella</b></p>
+      </blockquote>
+      <div class="d-flex justify-content-between border-top pt-3">
+        <p class="card-text">
+          <span class="h6 fw-5">Developer</span><br>
+          <small class="text-muted">MSU Naawan</small>
+        </p>
+        <img src="img/Jay Ann.jpg" width="90" height="90" class="rounded-circle" alt="" data-aos="fade">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-12 col-lg-6 col-xl-4" data-aos="fade-right">
+  <div class="card p-4 mt-3 border-0">
+    <div class="card-body">
+      <div class="text-dark py-2 fs-3">
+</svg>
+</div>
+      <blockquote class="blockquote">
+        <p><b>Vivian Lumactod</b></p>
+      </blockquote>
+      <div class="d-flex justify-content-between border-top pt-3">
+        <div>
+          <span class="h6 fw-5">Developer</span><br>
+          <small class="text-muted">MSU Naawan</small>
+        </div>
+        <img src="img/Vivian.png" width="90" height="90" class="rounded-circle" alt="" data-aos="fade">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-12 col-lg-6 col-xl-4">
+  <div class="card p-4 mt-3 border-0" data-aos="fade-up">
+    <div class="card-body">
+      <div class="text-dark py-2 fs-3">
+</div>
+      <blockquote class="blockquote">
+        <p><b>Daisy Cube</b></p>
+      </blockquote>
+      <div class="d-flex justify-content-between border-top pt-3">
+        <p class="card-text">
+          <span class="h6 fw-5">Devloper</span><br>
+          <small class="text-muted">MSU Naawan</small>
+        </p>
+        <img src="img/Daisy.jpg" width="90" height="90" class="rounded-circle" alt="" data-aos="fade">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-12 col-lg-6 col-xl-4">
+  <div class="card p-4 mt-3 border-0" data-aos="fade-left">
+    <div class="card-body">
+      <div class="text-dark py-2 fs-3">
+</div>
+      <blockquote class="blockquote">
+        <p><b>Rizza Mae Dicen</b></p>
+      </blockquote>
+      <div class="d-flex justify-content-between border-top pt-3">
+        <p class="card-text">
+          <span class="h6 fw-5">Developer</span><br>
+          <small class="text-muted">MSU Naawan</small>
+        </p>
+        <img src="img/Dicen.jpg" width="90" height="90" class="rounded-circle" alt="" data-aos="fade">
+      </div>
+    </div>
+  </div>
+</div>
+
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="container text-center py-3 small">Made with ❤️ by <a href="https://github.com/syntaxboybe" class="link-fancy" target="_blank">syntaxboybe</a>
+</div>
+</footer>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/aos.js"></script>
+ <script>
+ AOS.init({
+   duration: 800, // values from 0 to 3000, with step 50ms
+ });
+ </script>
+
+ <script>
+  let scrollpos = window.scrollY
+  const header = document.querySelector(".navbar")
+  const header_height = header.offsetHeight
+
+  const add_class_on_scroll = () => header.classList.add("scrolled", "shadow-sm")
+  const remove_class_on_scroll = () => header.classList.remove("scrolled", "shadow-sm")
+
+  window.addEventListener('scroll', function() {
+    scrollpos = window.scrollY;
+
+    if (scrollpos >= header_height) { add_class_on_scroll() }
+    else { remove_class_on_scroll() }
+
+    console.log(scrollpos)
+  })
+</script>
+
+  </body>
+</html>
